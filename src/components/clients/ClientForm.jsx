@@ -15,6 +15,11 @@ const ClientForm = props => {
             value={props.client.firstName}
             onChange={props.onInputChange}
           />
+          {props.errors["firstName"] && (
+            <span className="text-danger small">
+              {props.errors["firstName"]}
+            </span>
+          )}
         </div>
         <div className="col-sm-6 mb-3">
           <label htmlFor="lastName">Last Name</label>
@@ -27,14 +32,23 @@ const ClientForm = props => {
             onChange={props.onInputChange}
           />
           {props.errors["lastName"] && (
-            <span className="text-danger">Error</span>
+            <span className="text-danger small">
+              {props.errors["lastName"]}
+            </span>
           )}
         </div>
         <div className="col-sm-4 mb-3">
           <label htmlFor="typeOfId">Type of Id</label>
-          <select name="typeOfId" id="typeOfId" className="form-control">
+          <select
+            name="typeOfId"
+            id="typeOfId"
+            className="form-control"
+            onChange={props.onInputChange}
+          >
             {props.typesOfId.map(el => (
-              <option key={el.id}>{el.name}</option>
+              <option key={el.id} value={el.id}>
+                {el.name}
+              </option>
             ))}
           </select>
         </div>
@@ -48,6 +62,11 @@ const ClientForm = props => {
             value={props.client.idNumber}
             onChange={props.onInputChange}
           />
+          {props.errors["idNumber"] && (
+            <span className="text-danger small">
+              {props.errors["idNumber"]}
+            </span>
+          )}
         </div>
         <div className="col-sm-4 mb-3">
           <label htmlFor="phoneNumber">Phone Number</label>
@@ -59,6 +78,11 @@ const ClientForm = props => {
             value={props.client.phoneNumber}
             onChange={props.onInputChange}
           />
+          {props.errors["phoneNumber"] && (
+            <span className="text-danger small">
+              {props.errors["phoneNumber"]}
+            </span>
+          )}
         </div>
       </div>
       <div className="row">

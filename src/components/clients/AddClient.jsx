@@ -33,6 +33,7 @@ class AddClient extends Component {
     e.preventDefault();
     const errors = this.validate();
     this.setState({ errors });
+    if (errors) return;
   };
 
   validate = () => {
