@@ -14,6 +14,7 @@ class AddClient extends Component {
       idNumber: "",
       phoneNumber: ""
     },
+    errors: {},
     typesOfId: []
   };
 
@@ -28,7 +29,27 @@ class AddClient extends Component {
     this.setState({ client });
   };
 
-  handleSubmit = e => {};
+  handleSubmit = e => {
+    e.preventDefault();
+    const errors = this.validate();
+    this.setState({ errors });
+  };
+
+  validate = () => {
+    const errors = {};
+    const { client } = this.state;
+
+    if (client.firstName.trim() === "")
+      errors.firstName = "First name is required";
+    if (client.lastName.trim() === "")
+      errors.lastName = "Last name is required";
+    if (client.idNumber.trim() === "")
+      errors.idNumber = "Number of Id is required";
+    if (client.phoneNumber.trim() === "")
+      errors.phoneNumber = "Phone number is required";
+
+    return errors;
+  };
 
   getTypesOfId = () => {
     axios
@@ -63,8 +84,9 @@ class AddClient extends Component {
           onInputChange={this.handleChange}
           client={this.state.client}
           typesOfId={this.state.typesOfId}
-          onSaveClick={() => {
-            console.log("Saved");
+          errors={this.state.errors}
+          onSaveClick={e => {
+            this.handleSubmit(e);
           }}
         />
       </React.Fragment>

@@ -26,6 +26,9 @@ const ClientForm = props => {
             value={props.client.lastName}
             onChange={props.onInputChange}
           />
+          {props.errors["lastName"] && (
+            <span className="text-danger">Error</span>
+          )}
         </div>
         <div className="col-sm-4 mb-3">
           <label htmlFor="typeOfId">Type of Id</label>
