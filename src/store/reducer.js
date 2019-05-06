@@ -1,15 +1,19 @@
-import * as ActionTypes from './actions';
+import * as ActionTypes from "./actions";
 
 const initialState = {
-    counter: 0
-}
+  clients: {}
+};
 
 const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ActionTypes.MYACTION:
-            //My logic here
-            return state;
-    }
-}
+  switch (action.type) {
+    case ActionTypes.LOAD_CLIENTS:
+      return {
+        ...state,
+        clients: action.payload
+      };
+    default:
+      return state;
+  }
+};
 
 export default reducer;

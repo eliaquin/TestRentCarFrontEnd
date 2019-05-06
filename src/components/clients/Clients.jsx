@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import Button from "../common/Button";
-import * as ActionTypes from "../../store/actions";
+import ClientsTable from "./ClientsTable";
+import { loadClients } from "../../store/actions";
+import { connect } from "react-redux";
 
 class Clients extends Component {
-  state = {
-    client: {}
+  componentDidMount = () => {
+    this.props.onLoadClients();
   };
-
   handleCreateNewClient = () => {
     console.log("Lego");
   };
@@ -15,7 +15,7 @@ class Clients extends Component {
   render() {
     return (
       <div>
-        <div className="row">
+        <div className="row mb-3">
           <div className="col-sm-8">
             <h1>Clients</h1>
           </div>
@@ -30,20 +30,28 @@ class Clients extends Component {
             />
           </div>
         </div>
+        <div className="row">
+          <div className="col-sm-12">
+            <ClientsTable clients={this.props.clients} />
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {};
+const mapStateToProps = state => {
+  const { clients } = state;
+  return { clients };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIncrementCounter: () => dispatch({ type: ActionTypes.MYACTION })
+    onLoadClients: () => dispatch(loadClients())
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Clients);

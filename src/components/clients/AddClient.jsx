@@ -3,23 +3,28 @@ import Button from "../common/Button";
 import ClientForm from "./ClientForm";
 import axios from "axios";
 
-import { typesOfIdUrl } from "../../utils/urls";
+import { typesOfIdUrl, saveClientUrl } from "../../utils/urls";
 
 class AddClient extends Component {
   state = {
     client: {
       firstName: "",
       lastName: "",
-      typeOfId: "",
+      typeOfIdId: 1,
       idNumber: "",
       phoneNumber: ""
     },
     errors: {},
-    typesOfId: []
+    typesOfId: [],
+    addClientSuccessful: false,
+    responseInfo: {}
   };
 
   componentDidMount = () => {
     this.getTypesOfId();
+    this.setState({
+      addClientSuccessful: false
+    });
   };
 
   //This passes an event. Destructured.
@@ -33,7 +38,20 @@ class AddClient extends Component {
     e.preventDefault();
     const errors = this.validate();
     this.setState({ errors });
-    if (errors) return;
+    if (Object.keys(errors).length > 0) return;
+    axios
+      .post(saveClientUrl, this.state.client)
+      .then(result => {
+        this.setState({ responseInfo: result.data });
+      })
+      .catch(error => {
+        this.setState({
+          responseInfo: {
+            operationSuccessful: false,
+            message: "Error occurred. Operation failed."
+          }
+        });
+      });
   };
 
   validate = () => {
@@ -86,6 +104,7 @@ class AddClient extends Component {
           client={this.state.client}
           typesOfId={this.state.typesOfId}
           errors={this.state.errors}
+          responseInfo={this.state.responseInfo}
           onSaveClick={e => {
             this.handleSubmit(e);
           }}
