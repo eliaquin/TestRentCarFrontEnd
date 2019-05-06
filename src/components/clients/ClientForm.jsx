@@ -27,17 +27,6 @@ const ClientForm = props => {
             onChange={props.onInputChange}
           />
         </div>
-        {/*<div className="col-sm-4 mb-3">
-          <label htmlFor="typeOfId">Type of Id</label>
-          <input
-            type="text"
-            id="typeOfId"
-            name="typeOfId"
-            className="form-control"
-            value={props.client.typeOfId}
-            onChange={props.onInputChange}
-          />
-  </div>*/}
         <div className="col-sm-4 mb-3">
           <label htmlFor="typeOfId">Type of Id</label>
           <select name="typeOfId" id="typeOfId" className="form-control">

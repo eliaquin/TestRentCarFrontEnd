@@ -5,11 +5,22 @@ import * as ActionTypes from "../../store/actions";
 
 class Clients extends Component {
   state = {
-    client: {}
+    client: {},
+    errors: {}
   };
 
   handleCreateNewClient = () => {
     console.log("Lego");
+  };
+
+  validate = () => {
+    const errors = {};
+    const { client } = this.state;
+
+    if (client.firstName.trim() === "")
+      errors.firstName = "First name is required";
+
+      ...
   };
 
   render() {
