@@ -2,6 +2,7 @@ import React from "react";
 import _ from "lodash";
 import Button from "../common/Button";
 import AlertMessage from "../common/AlertMessage";
+import ErrorDisplay from "../common/ErrorDisplay";
 
 const VehicleForm = props => {
   const listOfColors = [
@@ -32,6 +33,7 @@ const VehicleForm = props => {
               value={props.vehicle.brand}
               onChange={props.onInputChange}
             />
+            <ErrorDisplay error={props.errors["brand"]} />
           </div>
           <div className="col-sm-5 mb-3">
             <label htmlFor="">Model</label>
@@ -43,6 +45,7 @@ const VehicleForm = props => {
               value={props.vehicle.model}
               onChange={props.onInputChange}
             />
+            <ErrorDisplay error={props.errors["model"]} />
           </div>
           <div className="col-sm-2 mb-3">
             <label htmlFor="">Year</label>
@@ -54,6 +57,7 @@ const VehicleForm = props => {
               value={props.vehicle.year}
               onChange={props.onInputChange}
             />
+            <ErrorDisplay error={props.errors["year"]} />
           </div>
           <div className="col-sm-3 mb-3">
             <label htmlFor="">Color</label>
@@ -69,6 +73,7 @@ const VehicleForm = props => {
                 </option>
               ))}
             </select>
+            <ErrorDisplay error={props.errors["color"]} />
           </div>
           <div className="col-sm-3 mb-3">
             <label htmlFor="">Daily Price</label>
@@ -80,17 +85,19 @@ const VehicleForm = props => {
               value={props.vehicle.dailyPrice}
               onChange={props.onInputChange}
             />
+            <ErrorDisplay error={props.errors["dailyPrice"]} />
           </div>
           <div className="col-sm-6 mb-3">
-            <label htmlFor="">Photo</label>
+            <label htmlFor="fileImage">Photo</label>
             <input
               type="file"
-              id="photo"
-              name="photo"
+              id="imageFile"
+              name="imageFile"
               className="form-control"
               accept="image/x-png,image/gif,image/jpeg"
               onChange={props.onImageInputChange}
             />
+            <ErrorDisplay error={props.errors["imageFile"]} />
           </div>
           <div className="col-sm-2 mb-3">
             <label htmlFor="">Number of Seats</label>
@@ -104,6 +111,7 @@ const VehicleForm = props => {
               value={props.vehicle.numberOfSeats}
               onChange={props.onInputChange}
             />
+            <ErrorDisplay error={props.errors["numberOfSeats"]} />
           </div>
           <div className="col-sm-2 mb-3">
             <label htmlFor="">Number of Doors</label>
@@ -117,6 +125,7 @@ const VehicleForm = props => {
               value={props.vehicle.numberOfDoors}
               onChange={props.onInputChange}
             />
+            <ErrorDisplay error={props.errors["numberOfDoors"]} />
           </div>
         </div>
         <div className="row">

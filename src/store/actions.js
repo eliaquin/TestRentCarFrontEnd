@@ -18,6 +18,7 @@ export const loadClients = () => {
         dispatch(updateClients(result.data));
       })
       .catch(error => {
+        console.log("Error loading clients.", error.message);
         dispatch(updateClients({}));
       });
   };
