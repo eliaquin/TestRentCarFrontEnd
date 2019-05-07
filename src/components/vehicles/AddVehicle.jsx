@@ -9,14 +9,46 @@ class AddVehicle extends Component {
       model: "",
       year: "",
       color: "",
-      dailyPrice: ""
-    }
+      dailyPrice: "",
+      numberOfSeats: 4,
+      numberOfDoors: 4
+    },
+    imageFile: null,
+    responseInfo: {},
+    errors: {}
   };
   handleChange = ({ currentTarget: input }) => {
     const vehicle = { ...this.state.vehicle };
     vehicle[input.name] = input.value;
     this.setState({ vehicle });
   };
+  handleImageSubmit = e => {
+    const image = e.target.files[0];
+    const isValidImage = image && image.type.match("image.*");
+
+    if (isValidImage) {
+      this.setState({
+        imageFile: URL.createObjectURL(image)
+      });
+    } else {
+      this.setState({
+        imageFile: null
+      });
+    }
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const errors = this.validate();
+    this.setState({ errors });
+    if (Object.keys(errors).length > 0) return;
+    console.log("Lego");
+  };
+
+  validate = () => {
+    return {};
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -35,7 +67,18 @@ class AddVehicle extends Component {
             />
           </div>
         </div>
-        <VehicleForm vehicle={this.state.vehicle} />
+        <VehicleForm
+          vehicle={this.state.vehicle}
+          imageFile={this.state.imageFile}
+          onInputChange={this.handleChange}
+          onImageInputChange={e => {
+            this.handleImageSubmit(e);
+          }}
+          responseInfo={this.state.responseInfo}
+          onSaveClick={e => {
+            this.handleSubmit(e);
+          }}
+        />
       </React.Fragment>
     );
   }
