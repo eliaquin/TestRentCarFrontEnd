@@ -35,7 +35,7 @@ button:focus {
 
 .car-features {
   list-style: none;
-  padding-left: 1px;
+  padding-left: 2px;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
@@ -49,7 +49,41 @@ button:focus {
   width: 50%;
 }
 
-.car-features li strong::after {
-  content: ": ";
-  padding-right: 5px;
+.car-features-icons {
+  position: relative;
+  padding-left: 25px;
+  height: 20px;
+  display: inline-block;
+}
+
+.car-features-icons::before {
+  content: "";
+  width: 22px;
+  height: 20px;
+  display: block;
+  overflow: hidden;
+  background: transparent url(./icons.png) no-repeat 0 50%;
+  position: absolute;
+  left: 0;
+  top: 0px;
+}
+
+.car-features-icons.seats::before {
+  background-position: -149px 50%;
+}
+
+.car-features-icons.transmission::before {
+  background-position: -50px 50%;
+}
+
+.car-features-icons.doors::before {
+  background-position: -200px 50%;
+}
+
+.car-features-icons.suitcases::before {
+  background-position: -299px 50%;
+}
+
+.car-features-icons.bags::before {
+  background-position: -348px 50%;
 }
