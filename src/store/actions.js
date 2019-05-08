@@ -2,6 +2,7 @@ import axios from "axios";
 import { getAllClientsUrl } from "../utils/urls";
 
 export const LOAD_CLIENTS = "LOAD_CLIENTS";
+export const LOAD_VEHICLES = "LOAD_VEHICLES";
 
 export const updateClients = clients => {
   return {
@@ -9,6 +10,10 @@ export const updateClients = clients => {
     payload: clients
   };
 };
+
+export const loadVehicles = () => {
+
+}
 
 export const loadClients = () => {
   return dispatch => {

@@ -48,6 +48,7 @@ class Home extends Component {
         >
           <h1>{this.state.shakira}</h1>
         </Modal>
+        <div className="row" />
         <VehicleBox />
       </div>
     );

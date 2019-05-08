@@ -1,6 +1,8 @@
 import React from "react";
 
-const VehicleBox = () => {
+const VehicleBox = props => {
+  const { vehicle } = props.vehicle;
+
   return (
     <div className="col-md-6 col-lg-4">
       <div className="thumbnails">
