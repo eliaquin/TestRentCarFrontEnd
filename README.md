@@ -9,3 +9,5 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   <li>Start with "yarn start"</li>
 </ul>
 
+<strong>This is an unfinished application lacking a lot of the things a real world application would require. </strong>
+
