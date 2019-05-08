@@ -46,7 +46,7 @@ const VehicleBox = ({ vehicle, onImageClick, onButtonClick }) => {
         </div>
         <form className="text-right border-top pt-3">
           <button onClick={onButtonClick} className="btn btn-warning">
-            Reserve now
+            Assign to Client
           </button>
         </form>
       </div>

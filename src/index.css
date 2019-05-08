@@ -33,6 +33,10 @@ button:focus {
   color: #000;
 }
 
+.black {
+  color: black;
+}
+
 .car-features {
   list-style: none;
   padding-left: 2px;

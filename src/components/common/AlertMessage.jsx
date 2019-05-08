@@ -1,13 +1,13 @@
 import React from "react";
 
-const AlertMessage = props => {
-  const alertClass = props.responseInfo.operationSuccessful
+const AlertMessage = ({ responseInfo }) => {
+  const alertClass = responseInfo.operationSuccessful
     ? "alert alert-success"
     : "alert alert-danger";
-  if (Object.keys(props.responseInfo).length > 0)
+  if (Object.keys(responseInfo).length > 0)
     return (
       <div className={alertClass} role="alert">
-        {props.responseInfo.message}
+        {responseInfo.message}
       </div>
     );
   return null;
