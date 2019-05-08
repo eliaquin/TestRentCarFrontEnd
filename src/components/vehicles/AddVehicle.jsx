@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Button from "../common/Button";
 import VehicleForm from "./VehicleForm";
 import axios from "axios";
-import { saveVehicleUrl } from "../../utils/urls";
+import { saveVehicleUrl, addVehicleImageUrl } from "../../utils/urls";
 
 class AddVehicle extends Component {
   state = {
@@ -16,8 +16,10 @@ class AddVehicle extends Component {
       numberOfDoors: 4
     },
     imageFile: null,
+    actualImage: null,
     responseInfo: {},
-    errors: {}
+    errors: {},
+    saveButtonDisabled: false
   };
   handleChange = ({ currentTarget: input }) => {
     const vehicle = { ...this.state.vehicle };
@@ -30,7 +32,8 @@ class AddVehicle extends Component {
 
     if (isValidImage) {
       this.setState({
-        imageFile: URL.createObjectURL(image)
+        imageFile: URL.createObjectURL(image),
+        actualImage: image
       });
     } else {
       this.setState({
@@ -44,20 +47,34 @@ class AddVehicle extends Component {
     const errors = this.validate();
     this.setState({ errors });
     if (Object.keys(errors).length > 0) return;
+    this.setState({ saveButtonDisabled: true });
     axios
       .post(saveVehicleUrl, this.state.vehicle)
       .then(result => {
         const responseInfo = result.data;
         if (responseInfo.operationSuccessful) {
-          console.log(responseInfo);
+          const vehicleId = responseInfo.payload;
+          const formData = new FormData();
+          formData.append("picture", this.state.actualImage);
+          return axios.post(addVehicleImageUrl, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              VehicleId: vehicleId
+            }
+          });
         }
+        this.setState({ responseInfo });
+      })
+      .then(result => {
+        this.setState({ responseInfo: result.data });
       })
       .catch(error => {
         this.setState({
           responseInfo: {
             operationSuccessful: false,
             message: "Error occurred. Operation failed."
-          }
+          },
+          saveButtonDisabled: false
         });
       });
   };
@@ -145,10 +162,11 @@ class AddVehicle extends Component {
           imageFile={this.state.imageFile}
           onInputChange={this.handleChange}
           errors={this.state.errors}
+          saveButtonDisabled={this.state.saveButtonDisabled}
+          responseInfo={this.state.responseInfo}
           onImageInputChange={e => {
             this.handleImageSubmit(e);
           }}
-          responseInfo={this.state.responseInfo}
           onSaveClick={e => {
             this.handleSubmit(e);
           }}

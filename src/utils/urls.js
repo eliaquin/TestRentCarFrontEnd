@@ -8,4 +8,6 @@ export const getAllClientsUrl = `${baseApiUrl}/clients/getallclients`;
 
 //Vehicles
 export const saveVehicleUrl = `${baseApiUrl}/vehicles/savevehicle`;
+export const addVehicleImageUrl = `${baseApiUrl}/vehicles/addvehicleimage`;
+
 

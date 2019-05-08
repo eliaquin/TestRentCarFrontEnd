@@ -24,7 +24,11 @@ const Button = props => {
   const iconClass = buttonActionTypes[props.intendedAction] || "";
 
   return (
-    <button className={buttonClass} onClick={props.onClick}>
+    <button
+      className={buttonClass}
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
       <i className={iconClass} /> {props.text}
     </button>
   );

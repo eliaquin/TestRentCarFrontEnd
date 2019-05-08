@@ -19,6 +19,19 @@ const VehicleForm = props => {
     { id: 11, name: "White" }
   ];
   const listOfColorsOrdered = _.orderBy(listOfColors, ["name"], ["asc"]);
+
+  const renderColors = () => {
+    return [
+      <option key="0" value="default" disabled="disabled">
+        Choose Color
+      </option>,
+      ...listOfColorsOrdered.map(el => (
+        <option key={el.id} value={el.name}>
+          {el.name}
+        </option>
+      ))
+    ];
+  };
   return (
     <React.Fragment>
       <form className="mb-3">
@@ -66,19 +79,16 @@ const VehicleForm = props => {
               id="color"
               className="form-control"
               onChange={props.onInputChange}
+              defaultValue="default"
             >
-              {listOfColorsOrdered.map(el => (
-                <option key={el.id} value={el.name}>
-                  {el.name}
-                </option>
-              ))}
+              {renderColors()}
             </select>
             <ErrorDisplay error={props.errors["color"]} />
           </div>
           <div className="col-sm-3 mb-3">
             <label htmlFor="">Daily Price</label>
             <input
-              type="text"
+              type="number"
               id="dailyPrice"
               name="dailyPrice"
               className="form-control"
@@ -135,12 +145,13 @@ const VehicleForm = props => {
               intendedAction="save"
               text="Save"
               onClick={props.onSaveClick}
+              disabled={props.saveButtonDisabled}
             />
           </div>
         </div>
       </form>
       {props.imageFile && (
-        <div className="row">
+        <div className="row mb-3">
           <div className="col-sm-12">
             <img height="300" src={props.imageFile} alt="Preview" />
           </div>
