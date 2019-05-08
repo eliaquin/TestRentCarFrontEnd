@@ -1,7 +1,8 @@
 import * as ActionTypes from "./actions";
 
 const initialState = {
-  clients: {}
+  clients: [],
+  vehicles: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         clients: action.payload
+      };
+    case ActionTypes.LOAD_VEHICLES:
+      return {
+        ...state,
+        vehicles: action.payload
       };
     default:
       return state;

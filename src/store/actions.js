@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAllClientsUrl } from "../utils/urls";
+import { getAllClientsUrl, getAllVehiclesUrl } from "../utils/urls";
 
 export const LOAD_CLIENTS = "LOAD_CLIENTS";
 export const LOAD_VEHICLES = "LOAD_VEHICLES";
@@ -11,8 +11,21 @@ export const updateClients = clients => {
   };
 };
 
-export const loadVehicles = () => {
+export const updateVehicles = vehicles => {
+  return {
+    type: LOAD_VEHICLES,
+    payload: vehicles
+  }
+}
 
+export const loadVehicles = () => {
+  return dispatch => {
+    axios.get(getAllVehiclesUrl)
+      .then(result => {
+        dispatch(updateVehicles(result.data));
+      })
+      .catch(error => console.log("Error loading vehicles.", error.message));
+  }
 }
 
 export const loadClients = () => {

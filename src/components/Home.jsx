@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
 import VehicleBox from "./vehicles/VehicleBox";
+import { generateImageUrl } from "../utils/urls";
+import { loadVehicles } from "../store/actions";
+import { connect } from "react-redux";
 
 Modal.setAppElement("#root");
 
@@ -18,7 +21,11 @@ const customStyles = {
 class Home extends Component {
   state = {
     modalIsOpen: false,
-    shakira: "Lego"
+    clickedImageUrl: ""
+  };
+
+  componentDidMount = () => {
+    this.props.onLoadVehicles();
   };
 
   openModal = () => {
@@ -34,11 +41,32 @@ class Home extends Component {
     this.setState({ modalIsOpen: false });
   };
 
+  handleImageClick = el => {
+    const url = generateImageUrl(el.imageName);
+    this.setState({ clickedImageUrl: url });
+    this.openModal();
+  };
+
+  handleButtonClick = (event, element) => {
+    event.preventDefault();
+    this.props.history.push(`/vehicles/rent/${element.id}`);
+  };
+
+  renderVehicleBoxes = () => {
+    return this.props.vehicles.map(el => (
+      <VehicleBox
+        key={el.id}
+        vehicle={el}
+        onImageClick={() => this.handleImageClick(el)}
+        onButtonClick={e => this.handleButtonClick(e, el)}
+      />
+    ));
+  };
+
   render() {
     return (
       <div className="text-center">
         <h1>Welcome to We Rent-A-Car 123</h1>
-        <button onClick={this.openModal}>Open Modal</button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -46,13 +74,26 @@ class Home extends Component {
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <h1>{this.state.shakira}</h1>
+          <img src={this.state.clickedImageUrl} alt="" />
         </Modal>
-        <div className="row" />
-        <VehicleBox />
+        <div className="row">{this.renderVehicleBoxes()}</div>
       </div>
     );
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  const { vehicles } = state;
+  return { vehicles };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLoadVehicles: () => dispatch(loadVehicles())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);

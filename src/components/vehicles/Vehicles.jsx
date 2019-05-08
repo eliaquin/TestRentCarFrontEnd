@@ -1,21 +1,12 @@
 import React, { Component } from "react";
 import VehiclesTable from "./VehiclesTable";
 import Button from "../common/Button";
-import axios from "axios";
-import { getAllVehiclesUrl } from "../../utils/urls";
+import { loadVehicles } from "../../store/actions";
+import { connect } from "react-redux";
 
 class Vehicles extends Component {
-  state = {
-    vehicles: {}
-  };
-
   componentDidMount() {
-    axios
-      .get(getAllVehiclesUrl)
-      .then(result => {
-        this.setState({ vehicles: result.data });
-      })
-      .catch(error => console.log(error));
+    this.props.onLoadVehicles();
   }
 
   render() {
@@ -38,7 +29,7 @@ class Vehicles extends Component {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <VehiclesTable vehicles={this.state.vehicles} />
+            <VehiclesTable vehicles={this.props.vehicles} />
           </div>
         </div>
       </React.Fragment>
@@ -46,4 +37,18 @@ class Vehicles extends Component {
   }
 }
 
-export default Vehicles;
+const mapStateToProps = state => {
+  const { vehicles } = state;
+  return { vehicles };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLoadVehicles: () => dispatch(loadVehicles())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Vehicles);
